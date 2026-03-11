@@ -3,6 +3,7 @@
 	import { careerHighlights } from '$lib/data/highlights';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Card from '$lib/components/ui/Card.svelte';
+	import HeroBackground3D from '$lib/components/HeroBackground3D.svelte';
 
 	const heroSubhead = profile.heroSubhead ?? profile.headline;
 	const stats = [
@@ -15,23 +16,27 @@
 </script>
 
 <section id="hero" class="hero section-spacing reveal" aria-labelledby="hero-title">
+	<HeroBackground3D />
 	<div class="container hero__container" data-reveal-stagger>
 		<div class="hero__grid">
-			<Card as="article" class="hero__profile reveal-item">
-				<div class="hero__avatar" aria-hidden="true">
-					<span class="hero__avatarInitial">{profile.name.charAt(0) ?? 'V'}</span>
-				</div>
-				<div class="hero__profileBody">
-					<p class="hero__role">Senior Frontend Engineer</p>
-					<h1 id="hero-title" class="hero__name">{profile.name}</h1>
-					<p class="hero__summary">{profile.headline}</p>
-				</div>
-				<ul class="hero__social">
-					<li><a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a></li>
-					<li><a href={profile.linkedIn} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-					<li><a href={`mailto:${profile.email}`}>Email</a></li>
-				</ul>
-			</Card>
+		
+		<!-- <Card as="article" class="hero__profile reveal-item">
+			<div class="hero__avatar" aria-hidden="true">
+				<span class="hero__avatarInitial">{profile.name.charAt(0) ?? 'V'}</span>
+			</div>
+			<div class="hero__profileBody">
+				<p class="hero__role">Senior Frontend Engineer</p>
+				<h1 id="hero-title" class="hero__name">{profile.name}</h1>
+				<p class="hero__summary">{profile.headline}</p>
+			</div>
+			<ul class="hero__social">
+				<li><a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a></li>
+				<li><a href={profile.linkedIn} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+				<li><a href={`mailto:${profile.email}`}>Email</a></li>
+			</ul>
+		</Card> -->
+		
+		
 			<div class="hero__headlineBlock reveal-item">
 				<p class="hero__eyebrow">Based in Brazil · Open to remote</p>
 				<h2 class="hero__title">
@@ -40,7 +45,7 @@
 				</h2>
 				<p class="hero__intro">{heroSubhead}</p>
 				<div class="hero__actions">
-					<Button href="#projects" variant="primary" size="lg">View projects</Button>
+					<Button href="#projects" variant="primary" size="lg" magnetic>View projects</Button>
 					<Button href="#contact" variant="secondary" size="lg">Get in touch</Button>
 					<Button href={profile.resumeUrl} variant="ghost" size="lg">Résumé</Button>
 				</div>
@@ -69,12 +74,16 @@
 
 <style>
 	.hero {
+		position: relative;
 		min-height: 90vh;
 		display: flex;
 		align-items: center;
+		overflow: hidden;
 	}
 
 	.hero__container {
+		position: relative;
+		z-index: 1;
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-12);
@@ -250,6 +259,7 @@
 	}
 
 	.hero__highlights {
+		margin-top: var(--space-10);
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: var(--space-4);

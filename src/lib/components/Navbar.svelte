@@ -12,6 +12,7 @@
 		'#hero': 'home',
 		'#about': 'about',
 		'#highlights': 'star',
+		'#skills': 'stack',
 		'#projects': 'work',
 		'#contact': 'mail'
 	};

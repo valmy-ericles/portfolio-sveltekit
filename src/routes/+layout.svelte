@@ -5,6 +5,7 @@
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import CursorSpotlight from '$lib/components/ui/CursorSpotlight.svelte';
+	import CustomCursor from '$lib/components/ui/CustomCursor.svelte';
 	import { initScrollReveal } from '$lib/animations/scrollReveal';
 
 	let { children } = $props();
@@ -26,6 +27,7 @@
 </svelte:head>
 
 <div class="layout">
+	
 	<CursorSpotlight />
 	<Navbar />
 	<main id="main-content">

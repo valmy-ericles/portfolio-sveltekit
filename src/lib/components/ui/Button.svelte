@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
   interface Props {
     href?: string;
     variant?: 'primary' | 'secondary' | 'ghost';
@@ -6,6 +8,7 @@
     type?: 'button' | 'submit';
     disabled?: boolean;
     class?: string;
+    magnetic?: boolean;
     children: import('svelte').Snippet;
   }
 
@@ -16,29 +19,133 @@
     type = 'button',
     disabled = false,
     class: className = '',
+    magnetic = false,
     children
   }: Props = $props();
 
   const tag = $derived(href ? 'a' : 'button');
+
+  let magneticX = $state(0);
+  let magneticY = $state(0);
+  let magneticScale = $state(1);
+  let magneticHover = $state(false);
+  let magneticWrap: HTMLSpanElement | null = $state(null);
+
+  const MAGNETIC_RADIUS = 140;
+  const MAGNETIC_STRENGTH = 0.15;
+  const MAGNETIC_MAX = 14;
+  const MAGNETIC_LERP = 0.14;
+  const HOVER_DISTANCE = 48;
+  const HOVER_SCALE = 1.04;
+
+  function clamp(v: number, max: number) {
+    return Math.max(-max, Math.min(max, v));
+  }
+
+  onMount(() => {
+    if (!magnetic) return;
+    let mouseX = 0;
+    let mouseY = 0;
+    let rafId = 0;
+
+    const onMouseMove = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    };
+
+    function tick() {
+      rafId = requestAnimationFrame(tick);
+      const wrap = magneticWrap;
+      if (!wrap || disabled) return;
+      const rect = wrap.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const dx = mouseX - centerX;
+      const dy = mouseY - centerY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      let targetX = 0;
+      let targetY = 0;
+      let targetScale = 1;
+
+      if (distance < MAGNETIC_RADIUS) {
+        targetX = clamp(dx * MAGNETIC_STRENGTH, MAGNETIC_MAX);
+        targetY = clamp(dy * MAGNETIC_STRENGTH, MAGNETIC_MAX);
+        if (distance < HOVER_DISTANCE) {
+          targetScale = HOVER_SCALE;
+          magneticHover = true;
+        } else {
+          magneticHover = false;
+        }
+      } else {
+        magneticHover = false;
+      }
+
+      magneticX += (targetX - magneticX) * MAGNETIC_LERP;
+      magneticY += (targetY - magneticY) * MAGNETIC_LERP;
+      magneticScale += (targetScale - magneticScale) * MAGNETIC_LERP;
+    }
+
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    tick();
+
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove);
+      cancelAnimationFrame(rafId);
+    };
+  });
+
+  const magneticStyle = $derived(
+    `translate(${magneticX}px, ${magneticY}px) scale(${magneticScale})`
+  );
 </script>
 
-{#if tag === 'a'}
-  <a
-    href={href}
-    class={`btn btn--${variant} btn--${size} ${className}`}
-    aria-disabled={disabled}
-    onclick={disabled ? (e) => e.preventDefault() : undefined}
-  >
-    {@render children()}
-  </a>
+{#if magnetic}
+  <span class="btn-magnetic-wrap" bind:this={magneticWrap} role="presentation">
+    <span
+      class="btn-magnetic-inner"
+      class:btn-magnetic-inner--hover={magneticHover && variant === 'primary'}
+      style="transform: {magneticStyle}"
+    >
+      {#if tag === 'a'}
+        <a
+          href={href}
+          class="btn btn--{variant} btn--{size} {className}"
+          aria-disabled={disabled}
+          onclick={disabled ? (e) => e.preventDefault() : undefined}
+        >
+          {@render children()}
+        </a>
+      {:else}
+        <button
+          type={type}
+          class="btn btn--{variant} btn--{size} {className}"
+          disabled={disabled}
+        >
+          {@render children()}
+        </button>
+      {/if}
+    </span>
+  </span>
 {:else}
-  <button
-    type={type}
-    class={`btn btn--${variant} btn--${size} ${className}`}
-    disabled={disabled}
-  >
-    {@render children()}
-  </button>
+  {#if tag === 'a'}
+    <a
+      href={href}
+      class="btn btn--{variant} btn--{size} {className}"
+      aria-disabled={disabled}
+      onclick={disabled ? (e) => e.preventDefault() : undefined}
+    >
+      {@render children()}
+    </a>
+  {:else}
+    <button
+      type={type}
+      class="btn btn--{variant} btn--{size} {className}"
+      disabled={disabled}
+    >
+      {@render children()}
+    </button>
+  {/if}
 {/if}
 
 <style>
@@ -103,5 +210,23 @@
   .btn--ghost:hover:not(:disabled):not([aria-disabled='true']) {
     background: rgba(15, 23, 42, 0.9);
     color: var(--color-text);
+  }
+
+  .btn-magnetic-wrap {
+    display: inline-flex;
+    position: relative;
+  }
+
+  .btn-magnetic-inner {
+    display: inline-flex;
+    transition: box-shadow 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+    will-change: transform;
+  }
+
+  .btn-magnetic-inner--hover .btn {
+    box-shadow: 0 0 24px rgba(163, 230, 53, 0.25);
+  }
+  :global([data-theme='light']) .btn-magnetic-inner--hover .btn {
+    box-shadow: 0 0 20px rgba(132, 204, 22, 0.3);
   }
 </style>

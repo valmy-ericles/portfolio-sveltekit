@@ -54,15 +54,20 @@ export async function initScrollReveal(root?: Document | HTMLElement) {
 		);
 		if (!items.length) return;
 
+		const isSkills = container.closest('#skills') != null;
+		const stagger = isSkills ? 0.1 : 0.18;
+		const duration = isSkills ? 0.6 : 0.8;
+		const yFrom = isSkills ? 40 : 60;
+
 		gsap.fromTo(
 			items,
-			{ opacity: 0, y: 60 },
+			{ opacity: 0, y: yFrom },
 			{
 				opacity: 1,
 				y: 0,
-				duration: 0.8,
+				duration,
 				ease: 'power3.out',
-				stagger: 0.18,
+				stagger,
 				scrollTrigger: {
 					trigger: container,
 					start: 'top 85%',
@@ -71,5 +76,56 @@ export async function initScrollReveal(root?: Document | HTMLElement) {
 			}
 		);
 	});
+
+	// Skills section: header fade + slide
+	const skillsSection = targetRoot.querySelector<HTMLElement>('#skills');
+	if (skillsSection) {
+		const header = skillsSection.querySelector<HTMLElement>('.section__header');
+		if (header) {
+			gsap.fromTo(
+				header,
+				{ opacity: 0, y: 32 },
+				{
+					opacity: 1,
+					y: 0,
+					duration: 0.65,
+					ease: 'power3.out',
+					scrollTrigger: {
+						trigger: skillsSection,
+						start: 'top 85%',
+						toggleActions: 'play none none none'
+					}
+				}
+			);
+		}
+
+		// Pills inside each card: subtle stagger after card is visible
+		const cards = Array.from(
+			skillsSection.querySelectorAll<HTMLElement>('.skills__card')
+		);
+		cards.forEach((card) => {
+			const pills = Array.from(
+				card.querySelectorAll<HTMLElement>('.skill-pill')
+			);
+			if (!pills.length) return;
+			gsap.fromTo(
+				pills,
+				{ opacity: 0, y: 10 },
+				{
+					opacity: 1,
+					y: 0,
+					duration: 0.4,
+					ease: 'power3.out',
+					stagger: 0.06,
+					delay: 0.15,
+					scrollTrigger: {
+						trigger: card,
+						start: 'top 88%',
+						toggleActions: 'play none none none'
+					}
+				}
+			);
+		});
+	}
 }
 

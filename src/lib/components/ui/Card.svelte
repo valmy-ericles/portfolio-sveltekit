@@ -14,8 +14,8 @@
 
 <style>
   .card {
-    background: var(--color-bg-elevated);
-    border: 1px solid var(--color-border);
+    background: rgba(28, 26, 25, 0.499);
+    border: none;
     border-radius: 1rem;
     padding: var(--space-6);
     transition:
