@@ -16,7 +16,7 @@
 	const ROTATION_SPEED = 0.0008;
 	const MOUSE_INFLUENCE = 0.0002;
 	const MOUSE_LERP = 0.025;
-	const WIREFRAME_COLOR = 0xa3e635; // accent-alt lime
+	const WIREFRAME_COLOR = 0xa35635; // accent-alt lime
 	const GLOW_COLOR = 0x22d3ee; // subtle teal
 	const PARTICLE_COUNT = 1000;
 
@@ -29,7 +29,7 @@
 		scene = new THREE.Scene();
 
 		camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
-		camera.position.z = 4.5;
+		camera.position.z = 4;
 
 		renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 		renderer.setSize(width, height);
@@ -38,12 +38,12 @@
 		container.appendChild(renderer.domElement);
 
 		// Wireframe sphere (icosahedron for tech look)
-		const wireGeometry = new THREE.IcosahedronGeometry(1.15, 2);
+		const wireGeometry = new THREE.IcosahedronGeometry(1.55, 1);
 		const wireMaterial = new THREE.MeshBasicMaterial({
 			color: WIREFRAME_COLOR,
 			wireframe: true,
 			transparent: true,
-			opacity: 0.2
+			opacity: 0.1
 		});
 		const wireMesh = new THREE.Mesh(wireGeometry, wireMaterial);
 
@@ -52,7 +52,7 @@
 		const glowMaterial = new THREE.MeshBasicMaterial({
 			color: GLOW_COLOR,
 			transparent: true,
-			opacity: 0.045,
+			opacity: 0.025,
 			depthWrite: false
 		});
 		const glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);

@@ -14,7 +14,7 @@
 
 <style>
   .card {
-    background: rgba(28, 26, 25, 0.499);
+    background: rgba(80, 42, 22, 0.309);
     border: none;
     border-radius: 1rem;
     padding: var(--space-6);

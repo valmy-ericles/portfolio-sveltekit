@@ -90,7 +90,7 @@
 		background-image: radial-gradient(
 			circle at var(--spotlight-x) var(--spotlight-y),
 			rgba(38, 54, 77, 0.3) 0,
-			rgba(31, 59, 91, 0.426) 0px,
+			rgba(5, 47, 183, 0.123) 0px,
 			transparent 420px
 				);
 	}
