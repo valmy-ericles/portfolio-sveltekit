@@ -1,43 +1,146 @@
 import type { Project } from '$lib/types';
+import bricHealthIcon from '$lib/assets/brichealth.webp';
+import filtrGameIcon from '$lib/assets/filtrgame.svg';
+import goldnIcon from '$lib/assets/24kgoldn.png';
+import consigazIcon from '$lib/assets/logo-consigaz.png';
+import tendaIcon from '$lib/assets/tenda.webp';
+import sarfatyIcon from '$lib/assets/sarfaty.svg';
 
 export const projects: Project[] = [
   {
-    id: 'patient-platform',
-    slug: 'patient-platform',
-    title: 'Patient Platform',
-    shortDescription: 'Patient-facing web app for appointments, results, and care journeys. I owned frontend architecture and core UI—modular structure, accessibility, and performance in a regulated environment.',
+    id: 'bric-health',
+    slug: 'bric-health',
+    title: 'Bric Health',
+    shortDescription: 'Healthcare startup platform focused on pediatric and clinic workflows. I built key frontend experiences for patient retention, real-time scheduling, telemedicine, and secretary support.',
     description:
-      'A patient-facing web application focused on appointments, exam results, and care journeys, with strong emphasis on accessibility and performance.',
-    techStack: ['React', 'TypeScript', 'Node.js', 'Design system', 'WCAG 2.1'],
+      'A healthcare web platform that helps clinics with patient retention, scheduling, telemedicine, and daily operations.',
+    techStack: ['Frontend Web', 'UI Architecture', 'Scheduling Flows', 'Telemedicine UX', 'Healthcare Product'],
     challenges: [
-      'Designing a modular frontend architecture that could grow with new features.',
-      'Keeping performance and accessibility at a high bar under complex UI requirements.'
+      'Translating complex clinic workflows into simple, low-friction interfaces.',
+      'Balancing conversion-focused landing sections with operational features used daily by medical teams.'
     ],
     impact: [
-      'Reduced time-to-task for key flows and shipped safely in a regulated environment.'
+      'Supported key journeys highlighted in the product: onboarding in under 1 minute, online scheduling, telemedicine, and reduced no-shows via notifications.'
     ],
+    image: bricHealthIcon,
     category: 'healthcare',
     featured: true,
-    context: 'Healthcare · Product',
-    role: 'Lead frontend · Architecture & UI',
-    focusArea: 'Architecture · Design system · A11y',
-    impactLine: 'Faster key flows, WCAG 2.1 AA, safe rollout in production.'
+    context: 'Healthcare startup · B2B2C',
+    role: 'Frontend Engineer · Product UI',
+    focusArea: 'Scheduling · Telemedicine · Patient retention',
+    impactLine: 'Clear clinic journeys, faster patient onboarding, and stronger retention communication.'
   },
   {
-    id: 'design-system',
-    slug: 'design-system',
-    title: 'Design System & Component Library',
-    shortDescription: 'Cross-product design system with documented components, tokens, and patterns. I drove adoption and alignment across squads—faster UI delivery and consistent UX.',
+    id: 'filtr-game',
+    slug: 'filtr-game',
+    title: 'Filtr Game',
+    shortDescription: 'Gamified music campaign website connected to Deezer. Users complete weekly missions, earn coins, and exchange points for rewards through a simple four-step flow.',
     description:
-      'A cross-product design system with documented components, tokens, and patterns used by several squads.',
-    techStack: ['React', 'Storybook', 'TypeScript', 'Design tokens'],
-    challenges: ['Aligning teams around shared components and patterns.'],
-    impact: ['Faster UI delivery and better visual consistency.'],
+      'A promotional music platform where users play with Deezer, complete missions, and redeem rewards.',
+    techStack: ['Frontend Web', 'Campaign Landing Page', 'Gamification UX', 'Deezer Integration', 'Responsive UI'],
+    challenges: [
+      'Designing a high-energy interface that keeps campaign rules clear and easy to follow.',
+      'Guiding users through account connection, profile completion, mission progress, and prize redemption.'
+    ],
+    impact: ['Increased engagement through mission loops and reward mechanics, with a lightweight onboarding flow.'],
+    image: filtrGameIcon,
+    category: 'frontend',
+    featured: true,
+    context: 'Music campaign · Consumer engagement',
+    role: 'Frontend Engineer · UX implementation',
+    focusArea: 'Gamification flow · Conversion UI · Campaign performance',
+    impactLine: 'Mission-based experience that drives repeat visits and reward redemption.'
+  },
+  {
+    id: '24kgoldn',
+    slug: '24kgoldn',
+    title: '24kGoldn',
+    shortDescription: 'Promotional website for the American rapper and singer 24kGoldn, designed to centralize releases, direct fans to streaming platforms, and capture subscriber interest.',
+    description:
+      'An artist-focused landing page combining visual storytelling, album highlights, and direct stream entry points.',
+    techStack: ['Frontend Web', 'Landing Page UX', 'Music Promotion', 'Streaming Redirects', 'Content-driven UI'],
+    challenges: [
+      'Keeping the visual identity true to the artist while maintaining clear call-to-actions.',
+      'Organizing multiple releases in a way that helps fans discover and stream quickly.'
+    ],
+    impact: [
+      'Delivered a focused fan hub featuring top releases (Icarus, El Dorado, Dropped Outta College, Icarus II) and subscription touchpoints.'
+    ],
+    image: goldnIcon,
+    category: 'frontend',
+    featured: true,
+    context: 'Music artist page · Entertainment',
+    role: 'Frontend Engineer · Visual implementation',
+    focusArea: 'Brand expression · Streaming CTA · Fan journey',
+    impactLine: 'Single destination to showcase releases and convert visits into streams/subscribers.'
+  },
+  {
+    id: 'consigaz',
+    slug: 'consigaz',
+    title: 'Consigaz',
+    shortDescription: 'Institutional website for one of the major GLP distributors in Brazil, with clear navigation for residential, enterprise, and condominium audiences.',
+    description:
+      'A corporate web experience focused on company positioning, service segmentation, and trust communication for the GLP market.',
+    techStack: ['React', 'TypeScript'],
+    challenges: [
+      'Structuring a large institutional information architecture without harming discoverability.',
+      'Balancing strong corporate branding with clear CTAs for multiple audience segments.'
+    ],
+    impact: [
+      'Delivered a modernized digital presence with clearer user paths for key sections such as Quem Somos, Residências, Empresas, and Condomínios.'
+    ],
+    image: consigazIcon,
+    category: 'frontend',
+    featured: true,
+    context: 'Energy · Institutional website',
+    role: 'Frontend Engineer',
+    focusArea: 'Information architecture · Corporate UX',
+    impactLine: 'Improved clarity of navigation and communication across strategic business segments.'
+  },
+  {
+    id: 'tenda-design-system',
+    slug: 'tenda-design-system',
+    title: 'Tenda',
+    shortDescription: 'Complete React component library built for Tenda, aligned to a design system with reusable patterns, solid engineering standards, and scalable frontend foundations.',
+    description:
+      'A full design-system-driven component library to standardize UI development across Tenda products and channels.',
+    techStack: ['React', 'TypeScript', 'Storybook', 'Automated Tests', 'Design System'],
+    challenges: [
+      'Transforming design guidelines into production-ready, reusable React components.',
+      'Ensuring consistency, testability, and safe adoption across multiple teams and product surfaces.'
+    ],
+    impact: [
+      'Accelerated UI delivery with a shared component base, stronger code quality practices, and documented usage through Storybook.'
+    ],
+    image: tendaIcon,
     category: 'design-system',
     featured: true,
-    context: 'Internal · Multi-squad',
-    role: 'Ownership · Documentation · Adoption',
-    focusArea: 'Design system · Component library',
-    impactLine: 'Faster UI delivery, consistent patterns across products.'
+    context: 'Real estate · Design system',
+    role: 'Frontend Engineer · Component library ownership',
+    focusArea: 'React architecture · Best practices · Testing',
+    impactLine: 'Scalable component ecosystem with documentation, test coverage, and consistent UI standards.'
+  },
+  {
+    id: 'sarfaty-authorization-platform',
+    slug: 'sarfaty-authorization-platform',
+    title: 'Grupo Sarfaty',
+    shortDescription: 'Authorization platform where I contributed to backend services with Node.js/NestJS and built core frontend interfaces in Angular.',
+    description:
+      'A financial operations system focused on secure authorization flows, combining robust backend rules with clear operational UI.',
+    techStack: ['Node.js', 'NestJS', 'Angular', 'TypeScript', 'Authorization Flows'],
+    challenges: [
+      'Designing reliable authorization logic with clear permission boundaries and secure backend behavior.',
+      'Building Angular interfaces that exposed complex authorization states in a simple way for end users.'
+    ],
+    impact: [
+      'Helped deliver a more structured authorization workflow, with backend consistency and frontend visibility for operational teams.'
+    ],
+    image: sarfatyIcon,
+    category: 'fintech',
+    featured: true,
+    context: 'Financial services · Authorization system',
+    role: 'Full-stack Engineer · Backend & Frontend',
+    focusArea: 'Node/NestJS backend · Angular UI',
+    impactLine: 'Secure authorization rules in the backend and clearer decision interfaces in the frontend.'
   }
 ];

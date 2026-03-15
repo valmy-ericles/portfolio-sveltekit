@@ -27,8 +27,7 @@
 </svelte:head>
 
 <div class="layout">
-	
-	<CursorSpotlight />
+
 	<Navbar />
 	<main id="main-content">
 		{@render children()}
