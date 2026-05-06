@@ -4,7 +4,7 @@
 
 	const blocks = [
 		{
-			title: 'Frontend architecture',
+			title: 'Software architecture',
 			body: 'Clear boundaries, feature-based structure, and patterns that keep large codebases shippable. I own decisions that affect long-term maintainability and team velocity.'
 		},
 		{
@@ -22,10 +22,10 @@
 	];
 </script>
 
-<Section id="about" title="ABOUT" subtitle="How I approach frontend, architecture, and product.">
+<Section id="about" title="ABOUT" subtitle="How I approach software, architecture, and product.">
 	<div class="about__wrap">
 		<p class="about__lead">
-			I'm a Senior Frontend Engineer with 7+ years building scalable web applications across healthcare, finance, legal tech, e-commerce, and internal platforms. I focus on <strong>architecture</strong>, <strong>design systems</strong>, <strong>performance</strong>, and <strong>accessibility</strong>—and on shipping products that hold up in production.
+			I'm a Fullstack Engineer with 7+ years building scalable web applications across healthcare, finance, legal tech, e-commerce, and internal platforms. I focus on <strong>architecture</strong>, <strong>design systems</strong>, <strong>performance</strong>, and <strong>accessibility</strong>—and on shipping products that hold up in production.
 		</p>
 		<div class="about__blocks" data-reveal-stagger>
 			{#each blocks as block, i}
@@ -36,7 +36,7 @@
 			{/each}
 		</div>
 		<p class="about__closing">
-			Based in Brazil, I'm focused on <strong>international opportunities</strong> where I can bring this mix of technical depth, architecture thinking, and product mindset—especially remote senior frontend and tech lead roles.
+			Based in Brazil, I build software systems with a focus on technical depth, architecture thinking, and product outcomes across different industries and product stages.
 		</p>
 	</div>
 </Section>

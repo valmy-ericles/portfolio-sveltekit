@@ -224,9 +224,6 @@
   }
 
   .btn-magnetic-inner--hover .btn {
-    box-shadow: 0 0 24px rgba(163, 230, 53, 0.25);
-  }
-  :global([data-theme='light']) .btn-magnetic-inner--hover .btn {
-    box-shadow: 0 0 20px rgba(132, 204, 22, 0.3);
+    box-shadow: 0 0 24px rgba(34, 211, 238, 0.28);
   }
 </style>

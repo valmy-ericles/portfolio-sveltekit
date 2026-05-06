@@ -1,13 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { navLinks } from '$lib/data/nav';
-	import { initTheme, toggleTheme } from '$lib/stores/theme';
 
 	const sectionIds = navLinks.map((l) => l.href.slice(1)).filter(Boolean);
 	type SectionRef = { id: string; el: HTMLElement };
 
 	let activeId = $state('');
-	let theme = $state<'light' | 'dark'>('light');
 	let isScrolled = $state(false);
 	let sections: SectionRef[] = [];
 	let lockActiveUntil = 0;
@@ -16,10 +14,8 @@
 	const iconByHref: Record<string, string> = {
 		'#hero': 'home',
 		'#about': 'about',
-		'#highlights': 'star',
-		'#skills': 'stack',
-		'#projects': 'work',
-		'#contact': 'mail'
+		'#tech-stack': 'stack',
+		'#projects': 'work'
 	};
 
 	const items = navLinks.map((link) => {
@@ -29,7 +25,6 @@
 	});
 
 	onMount(() => {
-		theme = initTheme();
 		const hash = window.location.hash.slice(1);
 		activeId = sectionIds.includes(hash) ? hash : 'hero';
 
@@ -46,6 +41,15 @@
 		const updateActiveFromScroll = () => {
 			const now = performance.now();
 			if (now < lockActiveUntil) return;
+
+			// Near the page end, the last section may never reach the top due viewport limits.
+			// Force the last nav section as active in this scenario.
+			const nearBottom =
+				window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+			if (nearBottom) {
+				activeId = sections.at(-1)?.id ?? activeId;
+				return;
+			}
 
 			let current = sections[0]?.id ?? 'hero';
 			const probe = window.scrollY + 140;
@@ -78,10 +82,6 @@
 		};
 	});
 
-	function handleThemeToggle() {
-		theme = toggleTheme();
-	}
-
 	function handleNavClick(href: string) {
 		const id = href.slice(1);
 		if (id && sectionIds.includes(id)) {
@@ -102,6 +102,7 @@
 							href={item.href}
 							class="navbar__item"
 							class:navbar__itemActive={activeId === item.href.slice(1)}
+							aria-label={item.label}
 							onclick={() => handleNavClick(item.href)}
 						>
 							<span class="navbar__iconWrap" aria-hidden="true">
@@ -170,28 +171,6 @@
 						</a>
 					</li>
 				{/each}
-				<li>
-					<button
-						type="button"
-						class="navbar__item navbar__themeToggle"
-						onclick={handleThemeToggle}
-						aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-						title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
-					>
-						<span class="navbar__iconWrap" aria-hidden="true">
-							{#if theme === 'dark'}
-								<svg viewBox="0 0 24 24">
-									<circle cx="12" cy="12" r="4" />
-									<path d="M12 3v2.2M12 18.8V21M5.2 5.2 6.7 6.7M17.3 17.3l1.5 1.5M3 12h2.2M18.8 12H21M5.2 18.8 6.7 17.3M17.3 6.7l1.5-1.5" />
-								</svg>
-							{:else}
-								<svg viewBox="0 0 24 24">
-									<path d="M21 12.5A8.5 8.5 0 0 1 12.5 4 6.5 6.5 0 1 0 21 12.5z" />
-								</svg>
-							{/if}
-						</span>
-					</button>
-				</li>
 			</ul>
 		</nav>
 	</div>
@@ -204,11 +183,8 @@
 		left: 0;
 		right: 0;
 		z-index: 50 !important;
-		padding-top: var(--space-4);
+		padding-top: var(--space-3);
 		padding-bottom: var(--space-2);
-		opacity: 0;
-		transform: translateY(-10px);
-		animation: navbar-enter 520ms var(--ease-out) 80ms forwards;
 	}
 
 	.navbar__outer {
@@ -220,46 +196,16 @@
 		display: inline-flex;
 		align-items: center;
 		max-width: 100%;
-		padding: 0.35rem 0.6rem;
+		padding: 0.28rem 0.45rem;
 		border-radius: 999px;
-		background: rgba(15, 23, 42, 0.84);
-		border: 1px solid rgba(148, 163, 184, 0.14);
-		box-shadow:
-			0 20px 45px rgba(0, 0, 0, 0.55),
-			0 0 0 1px rgba(15, 23, 42, 0.8);
-		backdrop-filter: blur(14px);
+		background: rgba(15, 23, 42, 0.88);
+		border: none;
 		pointer-events: auto;
-		transition:
-			background-color var(--duration-normal) var(--ease-out),
-			border-color var(--duration-normal) var(--ease-out),
-			backdrop-filter var(--duration-normal) var(--ease-out),
-			box-shadow var(--duration-normal) var(--ease-out);
-	}
-
-	/* Light theme override: pílula clara e sutil */
-	:global([data-theme='light']) .navbar__pill {
-		background: rgba(255, 255, 255, 0.84);
-		border-color: rgba(148, 163, 184, 0.22);
-		box-shadow:
-			0 14px 35px rgba(15, 23, 42, 0.12),
-			0 0 0 1px rgba(148, 163, 184, 0.35);
 	}
 
 	.navbar--scrolled .navbar__pill {
 		background: rgba(15, 23, 42, 0.92);
-		border-color: rgba(148, 163, 184, 0.22);
-		backdrop-filter: blur(20px);
-		box-shadow:
-			0 18px 40px rgba(0, 0, 0, 0.52),
-			0 0 0 1px rgba(148, 163, 184, 0.2);
-	}
-
-	:global([data-theme='light']) .navbar--scrolled .navbar__pill {
-		background: rgba(255, 255, 255, 0.94);
-		border-color: rgba(148, 163, 184, 0.3);
-		box-shadow:
-			0 16px 34px rgba(15, 23, 42, 0.16),
-			0 0 0 1px rgba(148, 163, 184, 0.3);
+		border-color: rgba(148, 163, 184, 0.26);
 	}
 
 	.navbar__list {
@@ -281,7 +227,7 @@
 		display: inline-flex;
 		align-items: center;
 		gap: 0.4rem;
-		padding: 0.35rem 0.75rem;
+		padding: 0.32rem 0.65rem;
 		border-radius: 999px;
 		font-size: 0.75rem;
 		font-weight: 500;
@@ -290,49 +236,20 @@
 		white-space: nowrap;
 		border: 1px solid transparent;
 		background: transparent;
-		--underline-scale: 0;
-		transition:
-			background-color var(--duration-normal) var(--ease-out),
-			color var(--duration-normal) var(--ease-out),
-			border-color var(--duration-normal) var(--ease-out),
-			transform 220ms var(--ease-out);
-	}
-
-	.navbar__item::after {
-		content: '';
-		position: absolute;
-		left: 0.7rem;
-		right: 0.7rem;
-		bottom: 0.18rem;
-		height: 1.5px;
-		border-radius: 999px;
-		background: color-mix(in oklab, var(--color-accent) 78%, transparent);
-		opacity: 0.9;
-		transform: scaleX(var(--underline-scale));
-		transform-origin: center;
-		transition: transform 220ms var(--ease-out);
+		transition: color var(--duration-fast) var(--ease-out);
 	}
 
 	.navbar__item:hover {
-		color: var(--color-text);
-		background: rgba(148, 163, 184, 0.1);
-		transform: translateY(-1px);
-		--underline-scale: 1;
-		cursor: pointer;
+		color: var(--color-text-muted);
+		background: transparent;
 	}
 
 	.navbar__itemActive {
-		color: color-mix(in oklab, var(--color-text) 88%, var(--color-text-muted));
-		background: transparent;
-		border-color: transparent;
-		--underline-scale: 1;
+		color: var(--color-text);
+		background: rgba(148, 163, 184, 0.12);
 	}
 	.navbar__itemActive .navbar__iconWrap {
-		background: rgba(15, 23, 42, 0.85);
-		color: inherit;
-	}
-	:global([data-theme='light']) .navbar__itemActive .navbar__iconWrap {
-		background: rgba(243, 244, 246, 1);
+		background: rgba(148, 163, 184, 0.2);
 		color: inherit;
 	}
 
@@ -343,12 +260,7 @@
 		width: 1.2rem;
 		height: 1.2rem;
 		border-radius: 999px;
-		background: rgba(15, 23, 42, 0.85);
-	}
-
-	/* Ícones claros no tema claro */
-	:global([data-theme='light']) .navbar__iconWrap {
-		background: rgba(243, 244, 246, 1);
+		background: transparent;
 	}
 
 	.navbar__iconWrap svg {
@@ -364,37 +276,9 @@
 		text-transform: uppercase;
 	}
 
-	.navbar__themeToggle {
-		padding-inline: 0.55rem;
-	}
-	.navbar__themeToggle::after {
-		display: none;
-	}
-	.navbar__themeToggle svg {
-		fill: none;
-	}
-
-	@keyframes navbar-enter {
-		from {
-			opacity: 0;
-			transform: translateY(-10px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
 	@media (prefers-reduced-motion: reduce) {
-		.navbar {
-			opacity: 1;
-			transform: none;
-			animation: none;
-		}
-
 		.navbar__pill,
-		.navbar__item,
-		.navbar__item::after {
+		.navbar__item {
 			transition: none;
 		}
 	}

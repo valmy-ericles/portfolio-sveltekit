@@ -42,14 +42,14 @@ export const skillTooltips: Record<string, string> = {
 	Docker: 'Containers for consistent environments',
 	'CI/CD': 'Continuous integration and deployment',
 	AWS: 'Cloud infrastructure and services',
-	Vercel: 'Frontend deployment and serverless',
+	Vercel: 'Web app deployment and serverless',
 	Cloudflare: 'CDN, edge, and security'
 };
 
 export const skills: SkillCategory[] = [
 	{
 		id: 'frontend',
-		category: 'Frontend',
+		category: 'Software',
 		items: [
 			{ name: 'React' },
 			{ name: 'Next.js' },

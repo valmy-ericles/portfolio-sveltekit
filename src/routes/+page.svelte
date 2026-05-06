@@ -3,11 +3,9 @@
   import About from '$lib/components/sections/About.svelte';
   import TechStack from '$lib/components/sections/TechStack.svelte';
   import Projects from '$lib/components/sections/Projects.svelte';
-  import Contact from '$lib/components/sections/Contact.svelte';
 </script>
 
 <Hero />
-<TechStack />
 <Projects />
 <About />
-<Contact />
+<TechStack />

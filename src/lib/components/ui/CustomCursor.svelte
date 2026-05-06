@@ -178,18 +178,4 @@
 		opacity: 0.35;
 		border-color: var(--color-accent);
 	}
-
-	:global([data-theme='light']) .custom-cursor__dot {
-		background: var(--color-text);
-	}
-
-	:global([data-theme='light']) .custom-cursor__ring {
-		border-color: var(--color-text);
-		opacity: 0.4;
-	}
-
-	:global([data-theme='light']) .custom-cursor.is-hover .custom-cursor__ring {
-		border-color: var(--color-accent);
-		opacity: 0.5;
-	}
 </style>

@@ -1,46 +1,48 @@
 <script lang="ts">
-	import { profile } from '$lib/data/profile';
+	import { onMount } from 'svelte';
 	import Button from '$lib/components/ui/Button.svelte';
-	import HeroBackground3D from '$lib/components/HeroBackground3D.svelte';
 
-	const proofChips = ['Architecture', 'Design Systems', 'Performance', 'Accessibility', 'Product Impact'] as const;
+	let HeroBackground3D = $state<null | typeof import('$lib/components/HeroBackground3D.svelte').default>(null);
 
-	const credibilityStats = [
-		{ value: '7+', label: 'Years', detail: 'senior frontend delivery' },
-		{ value: 'DS', label: 'Systems', detail: 'tokens, components, adoption' },
-		{ value: 'Scale', label: 'UI', detail: 'complex product surfaces' },
-		{ value: 'Remote', label: 'Worldwide', detail: 'Brazil-based collaboration' }
-	] as const;
+	const proofChips = ['System Architecture', 'Frontend Engineering', 'Backend APIs', 'Cloud & DevOps', 'Product Delivery'] as const;
 
-	const impactItems = [
-		{ title: 'Architecture ownership', detail: 'Frontend structures that scale across squads.' },
-		{ title: 'Design system execution', detail: 'From tokens to reusable components in production.' },
-		{ title: 'Performance + accessibility', detail: 'Fast interfaces with inclusive UX as baseline.' }
-	] as const;
+	// Removed stats/panel blocks to keep hero focused.
 
-	const domainTags = ['Healthcare', 'Fintech', 'E-commerce'] as const;
+	onMount(() => {
+		const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		const smallViewport = window.innerWidth < 768;
+		if (reduceMotion || smallViewport) return;
+
+		const timer = window.setTimeout(async () => {
+			const module = await import('$lib/components/HeroBackground3D.svelte');
+			HeroBackground3D = module.default;
+		}, 250);
+
+		return () => window.clearTimeout(timer);
+	});
 </script>
 
 <section id="hero" class="hero section-spacing reveal" aria-labelledby="hero-title">
-	<HeroBackground3D />
+	{#if HeroBackground3D}
+		{@const HeroBackground3DComponent = HeroBackground3D}
+		<HeroBackground3DComponent />
+	{/if}
 	<div class="container hero__container" data-reveal-stagger>
 		<div class="hero__grid">
 			<div class="hero__content reveal-item">
-				<p class="hero__eyebrow">Senior Frontend Engineer · Brazil · Remote Worldwide</p>
+				<p class="hero__eyebrow">Fullstack Engineer · Brazil · Remote Worldwide</p>
 				<h1 id="hero-title" class="hero__title">
-					I Build Scalable Frontend Systems
-					<span>That Ship Fast and Hold Up in Production</span>
+					<span class="hero__titleAccent">Fullstack Software Engineering</span>
+					<span class="hero__titleSubline">From Product to Production</span>
 				</h1>
 				<p class="hero__intro">
-					I lead architecture and UI systems for complex products, combining design systems,
-					performance, and accessibility with product execution. 7+ years delivering scalable
-					interfaces across healthcare, fintech, and e-commerce.
+					I design and deliver end-to-end software for complex products, connecting frontend
+					experiences, backend services, and cloud operations with product execution. 7+ years
+					building scalable platforms across healthcare, fintech, and e-commerce.
 				</p>
 
 				<div class="hero__actions">
 					<Button href="#projects" variant="primary" size="lg" magnetic>View Selected Work</Button>
-					<Button href="#contact" variant="secondary" size="lg">Book a 20-min Intro</Button>
-					<Button href={profile.resumeUrl} variant="ghost" size="lg">Download Résumé</Button>
 				</div>
 
 				<div class="hero__chips" aria-label="Core capabilities">
@@ -49,37 +51,8 @@
 					{/each}
 				</div>
 			</div>
-
-			<aside class="hero__panel reveal-item" aria-label="Credibility panel">
-				<p class="hero__panelEyebrow">Why teams hire me</p>
-				<div class="hero__panelMetrics">
-					{#each impactItems as item}
-						<div class="hero__panelMetric">
-							<p class="hero__panelMetricTitle">{item.title}</p>
-							<p class="hero__panelMetricDetail">{item.detail}</p>
-						</div>
-					{/each}
-				</div>
-				<div class="hero__panelFooter">
-					<p class="hero__panelLabel">Domains</p>
-					<div class="hero__domains">
-						{#each domainTags as tag}
-							<span class="hero__domain">{tag}</span>
-						{/each}
-					</div>
-				</div>
-			</aside>
 		</div>
 
-		<div class="hero__stats" aria-label="Credibility stats" data-reveal-stagger>
-			{#each credibilityStats as stat}
-				<div class="hero__stat reveal-item">
-					<p class="hero__statValue">{stat.value}</p>
-					<p class="hero__statLabel">{stat.label}</p>
-					<p class="hero__statDetail">{stat.detail}</p>
-				</div>
-			{/each}
-		</div>
 	</div>
 </section>
 
@@ -102,15 +75,18 @@
 
 	.hero__grid {
 		display: grid;
-		grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+		grid-template-columns: minmax(0, 1fr);
 		gap: clamp(1.5rem, 3vw, 2.8rem);
-		align-items: start;
+		align-items: center;
+		justify-items: center;
 	}
 
 	.hero__content {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-5);
+		align-items: center;
+		text-align: center;
 	}
 
 	.hero__eyebrow {
@@ -118,34 +94,45 @@
 		font-size: var(--text-xs);
 		letter-spacing: 0.17em;
 		text-transform: uppercase;
-		color: rgba(226, 232, 240, 0.7);
+		color: rgba(226, 232, 240, 0.9);
 	}
 
 	.hero__title {
 		margin: 0;
-		font-size: clamp(2.6rem, 5vw, 4.75rem);
+		font-size: clamp(3.6rem, 4.6vw, 6.8rem);
 		line-height: 0.97;
 		letter-spacing: -0.02em;
 		font-weight: 800;
 		color: var(--color-text);
-		max-inline-size: 13ch;
+		max-inline-size: 16ch;
 	}
 
-	.hero__title span {
+	.hero__title > span {
 		display: block;
+	}
+
+	.hero__titleAccent {
+		background: linear-gradient(105deg, #e2e8f0 0%, #bae6fd 40%, #7dd3fc 72%, #38bdf8 100%);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+		text-shadow: 0 0 26px rgba(56, 189, 248, 0.22);
+	}
+
+	.hero__titleSubline {
 		margin-top: 0.45rem;
-		color: rgba(249, 250, 251, 0.82);
+		color: rgba(249, 250, 251, 0.9);
 		font-weight: 680;
-		font-size: clamp(1.4rem, 2.5vw, 2.35rem);
+		font-size: clamp(1.75rem, 3.1vw, 2.9rem);
 		line-height: 1.08;
 	}
 
 	.hero__intro {
 		margin: 0;
-		max-inline-size: 55ch;
+		max-inline-size: 70ch;
 		font-size: clamp(1rem, 1.15vw, 1.1rem);
 		line-height: 1.7;
-		color: rgba(226, 232, 240, 0.84);
+		color: rgba(226, 232, 240, 0.92);
 	}
 
 	.hero__actions {
@@ -153,6 +140,7 @@
 		flex-wrap: wrap;
 		gap: var(--space-3);
 		margin-top: var(--space-2);
+		justify-content: center;
 	}
 
 	.hero__chips {
@@ -160,149 +148,18 @@
 		flex-wrap: wrap;
 		gap: 0.55rem;
 		margin-top: var(--space-2);
+		justify-content: center;
 	}
 
 	.hero__chip {
 		font-size: 0.72rem;
 		font-family: var(--font-mono);
-		color: rgba(226, 232, 240, 0.78);
+		color: rgba(226, 232, 240, 0.9);
 		background: rgba(255, 255, 255, 0.04);
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-radius: 999px;
 		padding: 0.28rem 0.64rem;
 		letter-spacing: 0.02em;
-	}
-
-	.hero__panel {
-		position: relative;
-		overflow: hidden;
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-5);
-		padding: clamp(1.15rem, 1.6vw, 1.6rem);
-		border-radius: 1rem;
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		background:
-			radial-gradient(circle at top right, rgba(249, 115, 22, 0.18), transparent 50%),
-			linear-gradient(160deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
-		box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25);
-	}
-
-	.hero__panelEyebrow {
-		margin: 0;
-		font-size: 0.72rem;
-		font-weight: 600;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		color: rgba(226, 232, 240, 0.72);
-	}
-
-	.hero__panelMetrics {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-4);
-	}
-
-	.hero__panelMetric {
-		display: flex;
-		flex-direction: column;
-		gap: 0.26rem;
-		padding-bottom: var(--space-3);
-		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-	}
-
-	.hero__panelMetric:last-child {
-		padding-bottom: 0;
-		border-bottom: 0;
-	}
-
-	.hero__panelMetricTitle {
-		margin: 0;
-		font-size: 0.98rem;
-		font-weight: 600;
-		color: rgba(248, 250, 252, 0.96);
-	}
-
-	.hero__panelMetricDetail {
-		margin: 0;
-		font-size: 0.86rem;
-		line-height: 1.5;
-		color: rgba(203, 213, 225, 0.8);
-	}
-
-	.hero__panelFooter {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-2);
-	}
-
-	.hero__panelLabel {
-		margin: 0;
-		font-size: 0.72rem;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
-		color: rgba(148, 163, 184, 0.9);
-	}
-
-	.hero__domains {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.55rem;
-	}
-
-	.hero__domain {
-		font-size: 0.75rem;
-		padding: 0.3rem 0.62rem;
-		border-radius: 999px;
-		border: 1px solid rgba(163, 230, 53, 0.35);
-		background: rgba(163, 230, 53, 0.1);
-		color: rgba(217, 249, 157, 0.92);
-	}
-
-	.hero__stats {
-		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: var(--space-3);
-	}
-
-	.hero__stat {
-		padding: 0.9rem 0.95rem;
-		border-radius: 0.8rem;
-		border: 1px solid rgba(255, 255, 255, 0.08);
-		background: rgba(255, 255, 255, 0.025);
-		transition:
-			transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
-			border-color 240ms cubic-bezier(0.22, 1, 0.36, 1),
-			background-color 240ms cubic-bezier(0.22, 1, 0.36, 1);
-	}
-
-	.hero__stat:hover {
-		transform: translateY(-2px);
-		border-color: rgba(249, 115, 22, 0.35);
-		background: rgba(249, 115, 22, 0.08);
-	}
-
-	.hero__statValue {
-		margin: 0;
-		font-size: 1.38rem;
-		font-weight: 700;
-		line-height: 1.1;
-		color: rgba(248, 250, 252, 0.98);
-	}
-
-	.hero__statLabel {
-		margin: 0.3rem 0 0;
-		font-size: 0.67rem;
-		text-transform: uppercase;
-		letter-spacing: 0.13em;
-		color: rgba(148, 163, 184, 0.92);
-	}
-
-	.hero__statDetail {
-		margin: 0.2rem 0 0;
-		font-size: 0.74rem;
-		line-height: 1.45;
-		color: rgba(203, 213, 225, 0.82);
 	}
 
 	@media (max-width: 1024px) {
@@ -316,9 +173,6 @@
 		.hero__title {
 			max-inline-size: 14ch;
 		}
-		.hero__stats {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-		}
 	}
 
 	@media (max-width: 640px) {
@@ -329,9 +183,6 @@
 		.hero__actions :global(.btn-magnetic-wrap) {
 			width: 100%;
 			justify-content: center;
-		}
-		.hero__stats {
-			grid-template-columns: minmax(0, 1fr);
 		}
 	}
 </style>

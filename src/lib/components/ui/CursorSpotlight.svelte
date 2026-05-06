@@ -77,22 +77,15 @@
 		--spotlight-x: 50vw;
 		--spotlight-y: 30vh;
 
-		/* In modo claro o efeito fica desativado para não poluir o fundo.
-		   O gradiente é aplicado apenas no tema escuro logo abaixo. */
-		background-image: none;
-
-		transition: opacity var(--duration-normal) var(--ease-out);
-		opacity: 1;
-	}
-
-	/* Optional: slightly stronger effect in dark mode */
-	:global([data-theme='dark']) .cursor-spotlight {
 		background-image: radial-gradient(
 			circle at var(--spotlight-x) var(--spotlight-y),
 			rgba(38, 54, 77, 0.3) 0,
 			rgba(5, 47, 183, 0.123) 0px,
 			transparent 420px
-				);
-	}
-</style>
+		);
 
+		transition: opacity var(--duration-normal) var(--ease-out);
+		opacity: 1;
+	}
+
+</style>

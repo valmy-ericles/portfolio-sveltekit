@@ -19,11 +19,11 @@
 	}
 </script>
 
-<Section id="contact" title="CONTACT" subtitle="Senior frontend roles, tech lead opportunities, and product-minded teams—I'm open to the right fit.">
+<Section id="contact" title="CONTACT" subtitle="Fullstack engineer roles, tech lead opportunities, and product-minded teams—I'm open to the right fit.">
 	<div class="contact__layout reveal">
 		<div class="contact__info">
 			<p class="contact__lead">
-				I'm interested in teams that care about <strong>architecture</strong>, <strong>design systems</strong>, and <strong>production-quality frontend</strong>. If you're hiring for a senior or lead frontend role—or building something that needs scalable UI—let's talk.
+				I'm interested in teams that care about <strong>architecture</strong>, <strong>design systems</strong>, and <strong>production-quality software</strong>. If you're hiring for a fullstack engineer role—or building something that needs scalable UI—let's talk.
 			</p>
 			<ul class="contact__links" aria-label="Direct links">
 				<li><a href={`mailto:${profile.email}`}>Email</a></li>

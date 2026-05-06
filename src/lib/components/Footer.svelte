@@ -7,7 +7,7 @@
 		<div class="footer__links">
 			<a href={profile.linkedIn} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a>
 			<a href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
-			<a href="mailto:{profile.email}" aria-label="Email">Email</a>
+			<a href={`mailto:${profile.email}`} aria-label="Email">Email</a>
 		</div>
 		<p class="footer__copy">
 			© {new Date().getFullYear()} {profile.name}. Built with SvelteKit.

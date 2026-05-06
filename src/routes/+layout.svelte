@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
+	import { profile } from '$lib/data/profile';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import CursorSpotlight from '$lib/components/ui/CursorSpotlight.svelte';
@@ -17,11 +18,20 @@
 </script>
 
 <svelte:head>
+	<title>{profile.name} | {profile.role}</title>
+	<meta name="description" content={profile.headline} />
+	<meta name="robots" content="index,follow" />
+	<meta property="og:title" content={`${profile.name} | ${profile.role}`} />
+	<meta property="og:description" content={profile.headline} />
+	<meta property="og:type" content="website" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={`${profile.name} | ${profile.role}`} />
+	<meta name="twitter:description" content={profile.headline} />
 	<link rel="icon" href={favicon} />
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 	<link
-		href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap"
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap"
 		rel="stylesheet"
 	/>
 </svelte:head>
@@ -55,4 +65,3 @@
 		padding-top: calc(var(--space-16) + var(--space-4));
 	}
 </style>
-

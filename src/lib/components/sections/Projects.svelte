@@ -5,13 +5,18 @@
 	import Card from '$lib/components/ui/Card.svelte';
 
 	function formatCategory(category: Project['category']) {
+		if (category === 'frontend') return 'SOFTWARE';
 		return category.replace('-', ' ').toUpperCase();
 	}
 
 	function getCaseStudyHref(project: Project) {
 		const preferredTypes: ProjectLink['type'][] = ['case-study', 'demo', 'live', 'github'];
 		const link = project.links?.find((item) => preferredTypes.includes(item.type));
-		return link?.url ?? '#contact';
+		return link?.url ?? '#projects';
+	}
+
+	function isExternalHref(href: string) {
+		return /^https?:\/\//i.test(href);
 	}
 
 	function getProjectHeadline(project: Project) {
@@ -25,13 +30,14 @@
 <Section
 	id="projects"
 	title="SELECTED WORK"
-	subtitle="Projects across healthcare and music campaigns where I built core frontend experiences and high-impact user journeys."
+	subtitle="Projects across healthcare and music campaigns where I built core software experiences and high-impact user journeys."
 >
 	<div class="projects__grid" data-reveal-stagger>
 		{#each projects as project (project.id)}
 			{@const visibleTech = project.techStack.slice(0, 3)}
 			{@const hiddenTechCount = Math.max(project.techStack.length - 3, 0)}
 			{@const ctaHref = getCaseStudyHref(project)}
+			{@const isExternal = isExternalHref(ctaHref)}
 			<Card as="article" class="projects__card reveal-item">
 				<div class="projects__surface">
 					<header class="projects__top">
@@ -67,7 +73,14 @@
 								<span class="projects__techMore">+{hiddenTechCount}</span>
 							{/if}
 						</div>
-						<a class="projects__cta" href={ctaHref}>View case study <span aria-hidden="true">→</span></a>
+						<a
+							class="projects__cta"
+							href={ctaHref}
+							target={isExternal ? '_blank' : undefined}
+							rel={isExternal ? 'noopener noreferrer' : undefined}
+						>
+							View case study <span aria-hidden="true">→</span>
+						</a>
 					</footer>
 				</div>
 			</Card>
@@ -98,7 +111,7 @@
 		position: absolute;
 		inset: 0;
 		background:
-			radial-gradient(circle at 12% 0%, rgba(249, 115, 22, 0.09), transparent 45%),
+			radial-gradient(circle at 12% 0%, rgba(56, 189, 248, 0.12), transparent 45%),
 			linear-gradient(160deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0));
 		pointer-events: none;
 	}
@@ -165,10 +178,10 @@
 		font-weight: 500;
 		padding: 0.2rem 0.55rem;
 		border-radius: 999px;
-		border: 1px solid rgba(255, 160, 80, 0.35);
-		background: rgba(255, 160, 80, 0.12);
-		color: #ffb36b;
-		box-shadow: 0 0 18px rgba(255, 160, 80, 0.18);
+		border: 1px solid rgba(56, 189, 248, 0.35);
+		background: rgba(56, 189, 248, 0.12);
+		color: #7dd3fc;
+		box-shadow: 0 0 18px rgba(56, 189, 248, 0.18);
 		text-transform: uppercase;
 		letter-spacing: 0.06em;
 		flex-shrink: 0;
@@ -194,7 +207,7 @@
 		margin: 0;
 		font-size: 0.92rem;
 		line-height: 1.55;
-		color: rgba(255, 255, 255, 0.88);
+		color: rgba(255, 255, 255, 0.94);
 		max-inline-size: 55ch;
 		display: -webkit-box;
 		line-clamp: 2;
@@ -214,14 +227,14 @@
 		margin: 0;
 		font-size: 0.82rem;
 		letter-spacing: 0.03em;
-		color: rgba(255, 255, 255, 0.65);
+		color: rgba(255, 255, 255, 0.82);
 	}
 
 	.projects__description {
 		margin: 0;
 		font-size: 0.85rem;
 		line-height: 1.58;
-		color: rgba(255, 255, 255, 0.73);
+		color: rgba(255, 255, 255, 0.86);
 		max-inline-size: 55ch;
 		display: -webkit-box;
 		line-clamp: 3;
@@ -253,7 +266,7 @@
 		border-radius: 999px;
 		background: rgba(255, 255, 255, 0.03);
 		border: 1px solid rgba(255, 255, 255, 0.08);
-		color: rgba(255, 255, 255, 0.6);
+		color: rgba(255, 255, 255, 0.8);
 		transition:
 			color var(--duration-fast) var(--ease-out),
 			border-color var(--duration-fast) var(--ease-out),
@@ -266,13 +279,13 @@
 		border-radius: 999px;
 		background: rgba(255, 255, 255, 0.025);
 		border: 1px solid rgba(255, 255, 255, 0.08);
-		color: rgba(255, 255, 255, 0.52);
+		color: rgba(255, 255, 255, 0.78);
 	}
 
 	.projects__cta {
 		font-size: 0.86rem;
 		font-weight: 600;
-		color: rgba(255, 255, 255, 0.86);
+		color: rgba(255, 255, 255, 0.96);
 		display: inline-flex;
 		align-items: center;
 		gap: 0.35rem;

@@ -16,7 +16,7 @@
 	const ROTATION_SPEED = 0.0008;
 	const MOUSE_INFLUENCE = 0.0002;
 	const MOUSE_LERP = 0.025;
-	const WIREFRAME_COLOR = 0xa35635; // accent-alt lime
+	const WIREFRAME_COLOR = 0x38bdf8; // cool accent blue
 	const GLOW_COLOR = 0x22d3ee; // subtle teal
 	const PARTICLE_COUNT = 1000;
 
@@ -87,8 +87,8 @@
 		sphere.add(particles);
 		scene.add(sphere);
 
-		// Posição do globo na tela: x = esquerda(-) / direita(+), y = baixo(-) / cima(+), z = atrás(-) / frente(+)
-		sphere.position.set(0.6, 0.5, 0);
+		// Center the globe in the hero background
+		sphere.position.set(0, 0, 0);
 
 		function onResize() {
 			if (!container) return;
