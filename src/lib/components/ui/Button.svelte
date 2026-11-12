@@ -156,7 +156,7 @@
     gap: var(--space-2);
     font-family: var(--font-sans);
     font-weight: 500;
-    border-radius: 999px;
+    border-radius: 8px;
     border: 1px solid transparent;
     cursor: pointer;
     transition:
@@ -185,7 +185,7 @@
 
   .btn--primary {
     background: var(--color-accent);
-    color: #020617;
+    color: #ffffff;
     border-color: var(--color-accent);
   }
   .btn--primary:hover:not(:disabled):not([aria-disabled='true']) {
@@ -196,11 +196,11 @@
   .btn--secondary {
     background: transparent;
     color: var(--color-text);
-    border-color: rgba(148, 163, 184, 0.5);
+    border-color: var(--color-border);
   }
   .btn--secondary:hover:not(:disabled):not([aria-disabled='true']) {
-    background: rgba(15, 23, 42, 0.9);
-    border-color: rgba(148, 163, 184, 0.9);
+    background: var(--color-accent-muted);
+    border-color: var(--color-accent);
   }
 
   .btn--ghost {
@@ -208,7 +208,7 @@
     color: var(--color-text-muted);
   }
   .btn--ghost:hover:not(:disabled):not([aria-disabled='true']) {
-    background: rgba(15, 23, 42, 0.9);
+    background: var(--color-accent-muted);
     color: var(--color-text);
   }
 

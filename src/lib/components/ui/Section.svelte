@@ -32,15 +32,14 @@
 
 <style>
   .section__header {
-    margin-bottom: var(--space-10);
+    margin-bottom: clamp(2rem, 4vw, 3rem);
     max-width: var(--container-default);
   }
   .section__title {
     margin: 0;
-    font-size: clamp(2rem, 2.6vw, 2.6rem);
+    font-size: clamp(1.9rem, 3vw, 2.7rem);
     font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+    letter-spacing: -0.045em;
     line-height: var(--leading-tight);
     color: var(--color-text);
   }

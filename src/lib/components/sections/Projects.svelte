@@ -1,307 +1,107 @@
 <script lang="ts">
 	import { projects } from '$lib/data/projects';
-	import type { Project, ProjectLink } from '$lib/types';
+	import type { Project } from '$lib/types';
 	import Section from '$lib/components/ui/Section.svelte';
-	import Card from '$lib/components/ui/Card.svelte';
+	import ProjectPreview from '$lib/components/sections/ProjectPreview.svelte';
 
-	function formatCategory(category: Project['category']) {
-		if (category === 'frontend') return 'SOFTWARE';
-		return category.replace('-', ' ').toUpperCase();
+	const priorityIds = ['ai-travel-planner', 'tenda-design-system', 'bric-health', 'sarfaty-authorization-platform'];
+	const priorityProjects = priorityIds.map((id) => projects.find((project) => project.id === id)).filter((project): project is Project => Boolean(project));
+	const otherProjects = projects.filter((project) => !priorityIds.includes(project.id) && project.id !== 'multi-agent-healthcare-platform');
+
+	function category(project: Project) {
+		if (project.id === 'tenda-design-system') return 'Design System';
+		if (project.id === 'bric-health') return 'B2B2C';
+		return project.category === 'ai' ? 'AI Engineering' : project.context?.split('·')[1]?.trim() ?? project.category;
 	}
 
-	function getCaseStudyHref(project: Project) {
-		const preferredTypes: ProjectLink['type'][] = ['case-study', 'demo', 'live', 'github'];
-		const link = project.links?.find((item) => preferredTypes.includes(item.type));
-		return link?.url ?? '#projects';
+	function link(project: Project) {
+		return project.links?.find((item) => ['case-study', 'demo', 'live', 'github', 'article'].includes(item.type));
 	}
 
-	function isExternalHref(href: string) {
-		return /^https?:\/\//i.test(href);
-	}
-
-	function getProjectHeadline(project: Project) {
-		if (project.context) {
-			return project.context.split('·')[0]?.trim() ?? project.title;
-		}
-		return project.title;
+	function linkLabel(project: Project) {
+		return link(project)?.type === 'article' ? 'Read press coverage' : 'View project';
 	}
 </script>
 
-<Section
-	id="projects"
-	title="SELECTED WORK"
-	subtitle="Projects across healthcare and music campaigns where I built core software experiences and high-impact user journeys."
->
-	<div class="projects__grid" data-reveal-stagger>
-		{#each projects as project (project.id)}
-			{@const visibleTech = project.techStack.slice(0, 3)}
-			{@const hiddenTechCount = Math.max(project.techStack.length - 3, 0)}
-			{@const ctaHref = getCaseStudyHref(project)}
-			{@const isExternal = isExternalHref(ctaHref)}
-			<Card as="article" class="projects__card reveal-item">
-				<div class="projects__surface">
-					<header class="projects__top">
-						<div class="projects__identity">
-							{#if project.image}
-								<img class="projects__logo" src={project.image} alt={`Logo ${project.title}`} loading="lazy" />
-							{/if}
-							<div class="projects__meta">
-								<p class="projects__company">{project.title}</p>
-								<p class="projects__category">{formatCategory(project.category)}</p>
-							</div>
-						</div>
-					</header>
+<Section id="projects">
+	<header class="projects__header">
+		<div>
+			<p class="projects__eyebrow">Selected Work</p>
+			<h2>Featured Projects</h2>
+			<p class="projects__subtitle">A selection of intelligent systems, software platforms, and digital products I've helped build.</p>
+		</div>
+		<a class="projects__all-link" href="#projects-more">View all projects <span aria-hidden="true">→</span></a>
+	</header>
 
-					<div class="projects__main">
-						<h3 class="projects__title">{getProjectHeadline(project)}</h3>
-						<p class="projects__impact">{project.impactLine ?? project.impact?.[0] ?? project.shortDescription}</p>
+	<div class="projects__grid">
+		{#each priorityProjects as project (project.id)}
+			{@const projectLink = link(project)}
+			<article class="project-card">
+				<ProjectPreview {project} />
+				<div class="project-card__body">
+					<p class="project-card__category">{category(project)}</p>
+					<h3>{project.title}</h3>
+					<p class="project-card__description">{project.shortDescription}</p>
+					<div class="project-card__footer">
+						<div class="project-card__tech">{#each project.techStack as tech}<span>{tech}</span>{/each}</div>
+						{#if projectLink}<a href={projectLink.url} target="_blank" rel="noopener noreferrer">{linkLabel(project)} <span aria-hidden="true">↗</span></a>{/if}
 					</div>
-
-					<div class="projects__secondary">
-						{#if project.role}
-							<p class="projects__role">{project.role}</p>
-						{/if}
-						<p class="projects__description">{project.shortDescription}</p>
-					</div>
-
-					<footer class="projects__footer">
-						<div class="projects__tech">
-							{#each visibleTech as tech}
-								<span class="projects__techTag">{tech}</span>
-							{/each}
-							{#if hiddenTechCount > 0}
-								<span class="projects__techMore">+{hiddenTechCount}</span>
-							{/if}
-						</div>
-						<a
-							class="projects__cta"
-							href={ctaHref}
-							target={isExternal ? '_blank' : undefined}
-							rel={isExternal ? 'noopener noreferrer' : undefined}
-						>
-							View case study <span aria-hidden="true">→</span>
-						</a>
-					</footer>
 				</div>
-			</Card>
+			</article>
 		{/each}
 	</div>
+
+	{#if otherProjects.length}
+		<div id="projects-more" class="projects__more">
+			<h3>More Work</h3>
+			<div class="projects__list">
+				{#each otherProjects as project (project.id)}
+					{@const projectLink = link(project)}
+					<div class="project-row">
+						<div><p class="project-card__category">{category(project)}</p><h4>{project.title}</h4></div>
+						<p>{project.shortDescription}{#if project.status}<span class="project-row__status"> {project.status}</span>{/if}</p>
+						{#if projectLink}<a href={projectLink.url} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title}`}>↗</a>{/if}
+					</div>
+				{/each}
+			</div>
+		</div>
+	{/if}
 </Section>
 
 <style>
-	.projects__grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 26.25rem), 1fr));
-		gap: 1.5rem;
-	}
-
-	:global(.projects__card) {
-		position: relative;
-		overflow: hidden;
-		border-radius: 1rem;
-		padding: 0;
-		background: #161616;
-		border: 1px solid rgba(255, 255, 255, 0.05);
-		box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
-		transition: none;
-	}
-
-	:global(.projects__card)::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background:
-			radial-gradient(circle at 12% 0%, rgba(56, 189, 248, 0.12), transparent 45%),
-			linear-gradient(160deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0));
-		pointer-events: none;
-	}
-
-	.projects__surface {
-		position: relative;
-		z-index: 1;
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-5);
-		padding: 1.9rem;
-		height: 100%;
-	}
-
-	.projects__top {
-		display: flex;
-		align-items: flex-start;
-		justify-content: space-between;
-		gap: var(--space-4);
-	}
-
-	.projects__identity {
-		display: flex;
-		align-items: flex-start;
-		gap: var(--space-4);
-		min-width: 0;
-	}
-
-	.projects__logo {
-		flex-shrink: 0;
-		width: clamp(6.1rem, 10vw, 8.4rem);
-		height: auto;
-		object-fit: contain;
-		transition: none;
-	}
-
-	.projects__meta {
-		display: flex;
-		flex-direction: column;
-		gap: 0.1rem;
-		min-width: 0;
-	}
-
-	.projects__company {
-		margin: 0;
-		font-size: 0.93rem;
-		font-weight: 600;
-		color: var(--color-text);
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-
-	.projects__category {
-		margin: 0;
-		font-size: var(--text-xs);
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--color-text-subtle);
-	}
-
-	.projects__badge {
-		font-size: 0.68rem;
-		font-weight: 500;
-		padding: 0.2rem 0.55rem;
-		border-radius: 999px;
-		border: 1px solid rgba(56, 189, 248, 0.35);
-		background: rgba(56, 189, 248, 0.12);
-		color: #7dd3fc;
-		box-shadow: 0 0 18px rgba(56, 189, 248, 0.18);
-		text-transform: uppercase;
-		letter-spacing: 0.06em;
-		flex-shrink: 0;
-	}
-
-	.projects__main {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-3);
-	}
-
-	.projects__title {
-		margin: 0;
-		font-size: 1.34rem;
-		font-weight: 700;
-		letter-spacing: -0.02em;
-		line-height: 1.2;
-		color: var(--color-text);
-		max-inline-size: 30ch;
-	}
-
-	.projects__impact {
-		margin: 0;
-		font-size: 0.92rem;
-		line-height: 1.55;
-		color: rgba(255, 255, 255, 0.94);
-		max-inline-size: 55ch;
-		display: -webkit-box;
-		line-clamp: 2;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
-
-	.projects__secondary {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-2);
-		padding-top: var(--space-1);
-	}
-
-	.projects__role {
-		margin: 0;
-		font-size: 0.82rem;
-		letter-spacing: 0.03em;
-		color: rgba(255, 255, 255, 0.82);
-	}
-
-	.projects__description {
-		margin: 0;
-		font-size: 0.85rem;
-		line-height: 1.58;
-		color: rgba(255, 255, 255, 0.86);
-		max-inline-size: 55ch;
-		display: -webkit-box;
-		line-clamp: 3;
-		-webkit-line-clamp: 3;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
-
-	.projects__footer {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-4);
-		margin-top: auto;
-		padding-top: var(--space-5);
-		border-top: 1px solid rgba(255, 255, 255, 0.07);
-	}
-
-	.projects__tech {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.45rem;
-	}
-
-	.projects__techTag {
-		font-size: 0.68rem;
-		font-family: var(--font-mono);
-		letter-spacing: 0.01em;
-		padding: 0.22rem 0.52rem;
-		border-radius: 999px;
-		background: rgba(255, 255, 255, 0.03);
-		border: 1px solid rgba(255, 255, 255, 0.08);
-		color: rgba(255, 255, 255, 0.8);
-		transition:
-			color var(--duration-fast) var(--ease-out),
-			border-color var(--duration-fast) var(--ease-out),
-			background-color var(--duration-fast) var(--ease-out);
-	}
-
-	.projects__techMore {
-		font-size: 0.7rem;
-		padding: 0.2rem 0.5rem;
-		border-radius: 999px;
-		background: rgba(255, 255, 255, 0.025);
-		border: 1px solid rgba(255, 255, 255, 0.08);
-		color: rgba(255, 255, 255, 0.78);
-	}
-
-	.projects__cta {
-		font-size: 0.86rem;
-		font-weight: 600;
-		color: rgba(255, 255, 255, 0.96);
-		display: inline-flex;
-		align-items: center;
-		gap: 0.35rem;
-		width: fit-content;
-		transition: none;
-	}
-
-	@media (max-width: 560px) {
-		.projects__surface {
-			padding: 1.45rem;
-		}
-		.projects__title {
-			font-size: 1.2rem;
-		}
-		.projects__top {
-			align-items: flex-start;
-		}
+	.projects__header { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 2.8rem; }
+	.projects__eyebrow { display: inline-block; margin: 0 0 0.9rem; padding: 0.28rem 0.75rem; border-radius: 99px; background: #e8f2ff; color: #1670ee; font-size: 0.88rem; font-weight: 650; }
+	.projects__header h2 { margin: 0; color: var(--color-text); font-size: clamp(2.3rem, 4vw, 3.4rem); line-height: 1.05; letter-spacing: -0.065em; }
+	.projects__subtitle { max-width: 52rem; margin: 0.55rem 0 0; color: #506783; font-size: 1rem; line-height: 1.5; }
+	.projects__all-link { color: #1670ee; font-size: 0.95rem; font-weight: 600; white-space: nowrap; }
+	.projects__all-link:hover, .project-card a:hover, .project-row a:hover { color: #1d4ed8; }
+	.projects__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+	.project-card { display: grid; grid-template-columns: minmax(0, 48%) minmax(0, 52%); min-width: 0; overflow: hidden; gap: 0.9rem; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 12px; background: #fff; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.035); transition: border-color 180ms ease, box-shadow 180ms ease; }
+	.project-card:hover { border-color: #c6dcfa; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.07); }
+	.project-card__body { display: flex; min-width: 0; flex-direction: column; padding: 0.65rem 0.65rem 0.55rem 0.15rem; }
+	.project-card__category { margin: 0 0 0.65rem; color: #1670ee; font-size: 0.72rem; font-weight: 650; letter-spacing: 0.06em; text-transform: uppercase; }
+	.project-card h3 { margin: 0 0 0.65rem; color: var(--color-text); font-size: clamp(1.25rem, 1.75vw, 1.55rem); line-height: 1.08; letter-spacing: -0.045em; }
+	.project-card__description { margin: 0; color: #506783; font-size: 0.88rem; line-height: 1.55; }
+	.project-card__footer { display: flex; flex: 1; flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 1rem; padding-top: 1rem; }
+	.project-card__tech { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+	.project-card__tech span { padding: 0.3rem 0.55rem; border-radius: 6px; background: #f1f6fc; color: #38516f; font-size: 0.7rem; line-height: 1; }
+	.project-card a, .project-row a { color: #1670ee; font-size: 0.95rem; font-weight: 600; }
+	.projects__more { margin-top: clamp(3rem, 5vw, 4.5rem); }
+	.projects__more > h3 { margin: 0 0 1rem; color: var(--color-text); font-size: 1.2rem; letter-spacing: -0.03em; }
+	.projects__list { border-top: 1px solid var(--color-border); }
+	.project-row { display: grid; grid-template-columns: minmax(10rem, 1fr) minmax(0, 2fr) auto; gap: 1.5rem; align-items: center; padding: 1rem 0.5rem; border-bottom: 1px solid var(--color-border); transition: background-color 180ms ease; }
+	.project-row:hover { background: #f8fafc; }
+	.project-row h4 { margin: 0; color: var(--color-text); font-size: 1rem; letter-spacing: -0.02em; }
+	.project-row .project-card__category { margin-bottom: 0.25rem; font-size: 0.65rem; }
+	.project-row p:not(.project-card__category) { margin: 0; color: var(--color-text-muted); font-size: 0.82rem; line-height: 1.45; }
+	.project-row__status { color: #8a5d22; }
+	@media (max-width: 1050px) { .projects__grid { grid-template-columns: 1fr; } }
+	@media (max-width: 640px) {
+		.projects__header { align-items: flex-start; flex-direction: column; margin-bottom: 2rem; }
+		.projects__all-link { align-self: flex-start; }
+		.project-card { grid-template-columns: 1fr; gap: 0.35rem; }
+		.project-card__body { padding: 0.75rem 0.5rem 0.55rem; }
+		.project-row { grid-template-columns: 1fr auto; gap: 0.45rem 1rem; padding-inline: 0; }
+		.project-row p:not(.project-card__category) { grid-column: 1 / -1; grid-row: 2; }
 	}
 </style>

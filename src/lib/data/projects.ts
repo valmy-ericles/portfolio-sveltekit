@@ -8,6 +8,32 @@ import sarfatyIcon from '$lib/assets/sarfaty.svg';
 
 export const projects: Project[] = [
   {
+    id: 'multi-agent-healthcare-platform',
+    slug: 'multi-agent-healthcare-platform',
+    title: 'Multi-Agent Healthcare Platform',
+    shortDescription: 'An intelligent healthcare automation platform powered by multi-agent orchestration, RAG, and conversational AI.',
+    description: 'An intelligent healthcare automation platform powered by multi-agent orchestration, RAG, and conversational AI.',
+    techStack: ['LangGraph', 'Python', 'PostgreSQL', 'RAG', 'LLMs'],
+    challenges: [],
+    impact: [],
+    category: 'ai',
+    featured: true,
+    context: 'AI systems · Healthcare'
+  },
+  {
+    id: 'ai-travel-planner',
+    slug: 'ai-travel-planner',
+    title: 'AI Travel Planner',
+    shortDescription: 'An intelligent travel planning application that coordinates specialized AI agents to generate personalized itineraries.',
+    description: 'An intelligent travel planning application that coordinates specialized AI agents to generate personalized itineraries.',
+    techStack: ['Next.js', 'FastAPI', 'LangGraph', 'PostgreSQL', 'LLMs'],
+    challenges: [],
+    impact: [],
+    category: 'ai',
+    featured: true,
+    context: 'AI systems · Travel'
+  },
+  {
     id: 'tenda-design-system',
     slug: 'tenda-design-system',
     title: 'Tenda',
@@ -26,7 +52,7 @@ export const projects: Project[] = [
     links: [
       {
         label: 'Live site',
-        url: 'https://tenda.com/',
+        url: 'https://tangerine-eclair-4fc9aa.netlify.app/',
         type: 'live'
       }
     ],
@@ -71,10 +97,10 @@ export const projects: Project[] = [
     id: 'filtr-game',
     slug: 'filtr-game',
     title: 'Filtr Game',
-    shortDescription: 'Gamified music campaign website connected to Deezer. Users complete weekly missions, earn coins, and exchange points for rewards through a simple four-step flow.',
+    shortDescription: 'Gamified music campaign website connected to Spotify. Users complete weekly missions, earn coins, and exchange points for rewards through a simple four-step flow.',
     description:
       'A promotional music platform where users play with Deezer, complete missions, and redeem rewards.',
-    techStack: ['Software Web', 'Campaign Landing Page', 'Gamification UX', 'Deezer Integration', 'Responsive UI'],
+    techStack: ['Software Web', 'Campaign Landing Page', 'Gamification UX', 'Spotify Integration', 'Responsive UI'],
     challenges: [
       'Designing a high-energy interface that keeps campaign rules clear and easy to follow.',
       'Guiding users through account connection, profile completion, mission progress, and prize redemption.'
@@ -86,7 +112,15 @@ export const projects: Project[] = [
     context: 'Music campaign · Consumer engagement',
     role: 'Software Engineer · UX implementation',
     focusArea: 'Gamification flow · Conversion UI · Campaign performance',
-    impactLine: 'Mission-based experience that drives repeat visits and reward redemption.'
+    impactLine: 'Mission-based experience that drives repeat visits and reward redemption.',
+    status: 'Project discontinued after five years online.',
+    links: [
+      {
+        label: 'Press coverage',
+        url: 'https://www.meioemensagem.com.br/marketing/filtr-da-sony-music-investe-em-game',
+        type: 'article'
+      }
+    ]
   },
   {
     id: '24kgoldn',

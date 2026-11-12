@@ -1,10 +1,10 @@
 export const profile = {
 	name: 'Valmy Machado',
-	role: 'Fullstack Engineer',
-	headline: 'Scalable interfaces, design systems, and production-grade web applications.',
+	role: 'AI Engineer & Full-Stack Engineer',
+	headline: 'AI Engineer & Full-Stack Engineer building intelligent systems and scalable software.',
 	/** Short hero subhead — outcome-oriented */
-	heroSubhead: 'I lead software architecture and UI systems that scale. React, TypeScript, design systems, performance, and accessibility—shipped across healthcare, fintech, and product teams.',
-	intro: 'I\'m a Fullstack Engineer from Brazil with 7+ years building software products across healthcare, finance, legal tech, and e-commerce. I focus on architecture, design systems, performance, and accessibility—and on shipping products that hold up in production.',
+	heroSubhead: 'I build intelligent applications, AI agents, and scalable software — from architecture to production.',
+	intro: 'I\'m a software engineer with 7+ years of experience building scalable applications across healthcare, finance, e-commerce, and enterprise platforms.',
 	resumeUrl: '#',
 	email: 'valmyericles@gmail.com',
 	location: 'Brazil',

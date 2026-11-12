@@ -10,7 +10,7 @@ export interface ExperienceEntry {
 export interface ProjectLink {
 	label: string;
 	url: string;
-	type: 'live' | 'github' | 'demo' | 'case-study';
+	type: 'live' | 'github' | 'demo' | 'case-study' | 'article';
 }
 
 export interface Project {
@@ -34,6 +34,7 @@ export interface Project {
 	focusArea?: string;
 	/** Single impact line for card (e.g. "Faster delivery, WCAG 2.1 AA") */
 	impactLine?: string;
+	status?: string;
 }
 
 export type ProjectCategory = 'frontend' | 'design-system' | 'ecommerce' | 'healthcare' | 'fintech' | 'internal' | 'ai' | 'other';
