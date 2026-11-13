@@ -224,6 +224,6 @@
   }
 
   .btn-magnetic-inner--hover .btn {
-    box-shadow: 0 0 24px rgba(34, 211, 238, 0.28);
+    box-shadow: 0 0 24px rgba(16, 185, 129, 0.22);
   }
 </style>

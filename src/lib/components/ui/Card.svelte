@@ -14,9 +14,9 @@
 
 <style>
   .card {
-    background: color-mix(in oklab, var(--color-bg-elevated) 86%, #0b1220);
-    border: 1px solid rgba(148, 163, 184, 0.14);
-    border-radius: 1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
     padding: var(--space-6);
     transition:
       border-color var(--duration-normal) var(--ease-out),
@@ -24,8 +24,8 @@
       background-color var(--duration-normal) var(--ease-out);
   }
   .card:hover {
-    border-color: rgba(125, 211, 252, 0.3);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    border-color: var(--color-accent-border);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
   }
 
 </style>

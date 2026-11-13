@@ -3,7 +3,6 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import { profile } from '$lib/data/profile';
 	import Navbar from '$lib/components/Navbar.svelte';
-	import Footer from '$lib/components/Footer.svelte';
 
 	let { children } = $props();
 
@@ -34,7 +33,6 @@
 	<main id="main-content">
 		{@render children()}
 	</main>
-	<Footer />
 </div>
 
 <style>

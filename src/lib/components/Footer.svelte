@@ -37,7 +37,7 @@
 		color: var(--color-text-muted);
 	}
 	.footer__links a:hover {
-		color: var(--color-text);
+		color: var(--color-link-hover);
 	}
 	.footer__copy {
 		margin: 0;

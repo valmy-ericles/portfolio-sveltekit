@@ -7,12 +7,14 @@
 		--color-text: #171717;
 		--color-text-muted: #64748b;
 		--color-text-subtle: #94a3b8;
-		--color-accent: #2563eb;
-		--color-accent-alt: #1d4ed8;
-		--color-accent-muted: #eff6ff;
-		--color-link: #2563eb;
-		--color-link-hover: #1d4ed8;
-		--color-focus-ring: #2563eb;
+		--color-accent: #059669;
+		--color-accent-alt: #047857;
+		--color-accent-muted: #ecfdf5;
+		--color-accent-soft: #d1fae5;
+		--color-accent-border: #a7f3d0;
+		--color-link: #059669;
+		--color-link-hover: #047857;
+		--color-focus-ring: #059669;
 		--font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 		--font-heading: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 		--font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -35,7 +37,7 @@ h1, h2, h3, h4 { font-family: var(--font-heading); }
 a { color: var(--color-link); text-decoration: none; transition: color var(--duration-fast) var(--ease-out); }
 a:hover { color: var(--color-link-hover); }
 :focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 3px; }
-::selection { background: #dbeafe; color: var(--color-text); }
+::selection { background: var(--color-accent-soft); color: var(--color-text); }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .container { width: 100%; max-width: var(--container-wide); margin-inline: auto; padding-inline: 1.25rem; }
 @media (min-width: 768px) { .container { padding-inline: 2rem; } }

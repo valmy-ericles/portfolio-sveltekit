@@ -23,12 +23,19 @@ export const projects: Project[] = [
   {
     id: 'ai-travel-planner',
     slug: 'ai-travel-planner',
-    title: 'AI Travel Planner',
+    title: 'Mapsterkit',
     shortDescription: 'An intelligent travel planning application that coordinates specialized AI agents to generate personalized itineraries.',
-    description: 'An intelligent travel planning application that coordinates specialized AI agents to generate personalized itineraries.',
+    description: 'Mapsterkit is an intelligent travel planning application that coordinates specialized AI agents to generate personalized itineraries.',
     techStack: ['Next.js', 'FastAPI', 'LangGraph', 'PostgreSQL', 'LLMs'],
     challenges: [],
     impact: [],
+    links: [
+      {
+        label: 'Live site',
+        url: 'https://mapsterkit.com/',
+        type: 'live'
+      }
+    ],
     category: 'ai',
     featured: true,
     context: 'AI systems · Travel'
@@ -97,9 +104,9 @@ export const projects: Project[] = [
     id: 'filtr-game',
     slug: 'filtr-game',
     title: 'Filtr Game',
-    shortDescription: 'Gamified music campaign website connected to Spotify. Users complete weekly missions, earn coins, and exchange points for rewards through a simple four-step flow.',
+    shortDescription: 'I developed a gamified music campaign with missions, rewards, playlists, and social engagement.',
     description:
-      'A promotional music platform where users play with Deezer, complete missions, and redeem rewards.',
+      'I developed a promotional music platform where users connect their music accounts, complete missions, and redeem rewards.',
     techStack: ['Software Web', 'Campaign Landing Page', 'Gamification UX', 'Spotify Integration', 'Responsive UI'],
     challenges: [
       'Designing a high-energy interface that keeps campaign rules clear and easy to follow.',
@@ -126,9 +133,9 @@ export const projects: Project[] = [
     id: '24kgoldn',
     slug: '24kgoldn',
     title: '24kGoldn',
-    shortDescription: 'Promotional website for the American rapper and singer 24kGoldn, designed to centralize releases, direct fans to streaming platforms, and capture subscriber interest.',
+    shortDescription: 'I developed a promotional website for 24kGoldn to showcase releases and drive streaming.',
     description:
-      'An artist-focused landing page combining visual storytelling, album highlights, and direct stream entry points.',
+      'I developed an artist-focused landing page combining visual storytelling, album highlights, and direct streaming entry points.',
     techStack: ['Software Web', 'Landing Page UX', 'Music Promotion', 'Streaming Redirects', 'Content-driven UI'],
     challenges: [
       'Keeping the visual identity true to the artist while maintaining clear call-to-actions.',
@@ -153,12 +160,34 @@ export const projects: Project[] = [
     impactLine: 'Single destination to showcase releases and convert visits into streams/subscribers.'
   },
   {
+    id: 'gustavo-lima',
+    slug: 'gustavo-lima',
+    title: 'Gustavo Lima',
+    shortDescription: 'I created a promotional campaign website for Gustavo Lima with fan participation and playlist sharing.',
+    description:
+      'I created a promotional campaign website for Gustavo Lima, combining show discovery, fan photo submissions, audience participation, and playlist sharing.',
+    techStack: ['Software Web', 'Event Experience', 'Responsive UI', 'Fan Engagement', 'Music Platform'],
+    challenges: [
+      'Designing an immersive experience that connects a live concert atmosphere with clear digital interactions.',
+      'Making audience participation, photo submissions, and playlist sharing intuitive across desktop and mobile layouts.'
+    ],
+    impact: [
+      'Created a cohesive fan journey from city selection and event discovery to participation, sharing, and post-show playlist engagement.'
+    ],
+    category: 'frontend',
+    featured: true,
+    context: 'Music · Fan engagement platform',
+    role: 'Software Engineer · Experience implementation',
+    focusArea: 'Event UX · Responsive UI · Social sharing',
+    impactLine: 'Connected live-show energy with city discovery, audience participation, and post-event sharing.'
+  },
+  {
     id: 'consigaz',
     slug: 'consigaz',
     title: 'Consigaz',
-    shortDescription: 'Institutional website for one of the major GLP distributors in Brazil, with clear navigation for residential, enterprise, and condominium audiences.',
+    shortDescription: 'Complete refactor of the Client Area for a major GLP distributor in Brazil, with backend integration fixes, new features, and improved performance.',
     description:
-      'A corporate web experience focused on company positioning, service segmentation, and trust communication for the GLP market.',
+      'A complete refactor of the Client Area, resolving backend integration issues, integrating new customer-facing functionality, and improving application performance across key user journeys.',
     techStack: ['React', 'TypeScript'],
     challenges: [
       'Structuring a large institutional information architecture without harming discoverability.',
