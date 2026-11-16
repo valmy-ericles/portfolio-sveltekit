@@ -17,7 +17,7 @@
 	const featuredCopy: Record<string, { description: string; tech: string[]; badge?: string }> = {
 		'bric-health': {
 			description: 'Healthcare platform focused on pediatric care and clinic workflows.',
-			tech: ['React', 'Node.js', 'PostgreSQL']
+			tech: ['React', 'Ruby on Rails']
 		},
 		consigaz: {
 			description: 'Refactored the Client Area, fixed backend integrations, shipped new features, and improved performance.',
@@ -29,7 +29,7 @@
 		},
 		'filtr-game': {
 			description: 'I developed a gamified music campaign with missions, rewards, and playlists.',
-			tech: ['Campaign UX', 'Gamification', 'Responsive UI']
+			tech: ['React', 'Gamification', 'Responsive UI']
 		},
 		'gustavo-lima': {
 			description: 'I created a promotional campaign site with fan participation and playlist sharing.',
