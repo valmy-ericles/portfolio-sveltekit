@@ -5,10 +5,8 @@
 	import ProjectPreview from '$lib/components/sections/ProjectPreview.svelte';
 
 	const priorityIds = ['bric-health', 'consigaz', 'sarfaty-authorization-platform', 'tenda-design-system', 'gustavo-lima', '24kgoldn', 'filtr-game'];
-	const personalProjectIds = ['ai-travel-planner'];
 	const priorityProjects = priorityIds.map((id) => projects.find((project) => project.id === id)).filter((project): project is Project => Boolean(project));
-	const personalProjects = personalProjectIds.map((id) => projects.find((project) => project.id === id)).filter((project): project is Project => Boolean(project));
-	const otherProjects = projects.filter((project) => !priorityIds.includes(project.id) && !personalProjectIds.includes(project.id) && project.id !== 'multi-agent-healthcare-platform');
+	const otherProjects = projects.filter((project) => !priorityIds.includes(project.id) && project.id !== 'multi-agent-healthcare-platform');
 
 	function category(project: Project) {
 		if (project.id === 'tenda-design-system') return 'Design System';
@@ -38,13 +36,8 @@
 			tech: ['Event UX', 'Responsive UI', 'Social Sharing']
 		},
 		'sarfaty-authorization-platform': {
-			description: 'Authorization platform for financial services and internal operations.',
+			description: 'Internal-use authorization system for financial services and operations.',
 			tech: ['Node.js', 'NestJS', 'Angular']
-		},
-		'ai-travel-planner': {
-			description: 'Mapsterkit creates personalized travel itineraries using specialized AI agents.',
-			tech: ['Next.js', 'LangGraph', 'PostgreSQL'],
-			badge: 'Currently building'
 		},
 		'tenda-design-system': {
 			description: 'Reusable React component library built around a scalable design system.',
@@ -89,30 +82,6 @@
 			</article>
 		{/each}
 	</div>
-
-	{#if personalProjects.length}
-		<div class="projects__more projects__personal">
-			<h3>Personal Projects</h3>
-			<div class="projects__grid projects__personal-grid">
-				{#each personalProjects as project (project.id)}
-					{@const projectLink = link(project)}
-					{@const copy = featuredCopy[project.id]}
-					<article class="project-card">
-						<ProjectPreview {project} />
-						<div class="project-card__body">
-							<h3>{project.title}</h3>
-							{#if copy.badge}<span class="project-card__badge">{copy.badge}</span>{/if}
-							<p class="project-card__description">{copy.description}</p>
-							<div class="project-card__footer">
-								<p class="project-card__tech">{copy.tech.join(' · ')}</p>
-								{#if projectLink}<a href={projectLink.url} target="_blank" rel="noopener noreferrer">{linkLabel(project)} <span aria-hidden="true">↗</span></a>{/if}
-							</div>
-						</div>
-					</article>
-				{/each}
-			</div>
-		</div>
-	{/if}
 
 	{#if otherProjects.length}
 		<div id="projects-more" class="projects__more">

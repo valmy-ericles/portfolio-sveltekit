@@ -21,26 +21,6 @@ export const projects: Project[] = [
     context: 'AI systems · Healthcare'
   },
   {
-    id: 'ai-travel-planner',
-    slug: 'ai-travel-planner',
-    title: 'Mapsterkit',
-    shortDescription: 'An intelligent travel planning application that coordinates specialized AI agents to generate personalized itineraries.',
-    description: 'Mapsterkit is an intelligent travel planning application that coordinates specialized AI agents to generate personalized itineraries.',
-    techStack: ['Next.js', 'FastAPI', 'LangGraph', 'PostgreSQL', 'LLMs'],
-    challenges: [],
-    impact: [],
-    links: [
-      {
-        label: 'Live site',
-        url: 'https://mapsterkit.com/',
-        type: 'live'
-      }
-    ],
-    category: 'ai',
-    featured: true,
-    context: 'AI systems · Travel'
-  },
-  {
     id: 'tenda-design-system',
     slug: 'tenda-design-system',
     title: 'Tenda',
@@ -215,7 +195,7 @@ export const projects: Project[] = [
     id: 'sarfaty-authorization-platform',
     slug: 'sarfaty-authorization-platform',
     title: 'Grupo Sarfaty',
-    shortDescription: 'Authorization platform where I contributed to backend services with Node.js/NestJS and built core software interfaces in Angular.',
+    shortDescription: 'Internal-use authorization system where I contributed to backend services with Node.js/NestJS and built core software interfaces in Angular.',
     description:
       'A financial operations system focused on secure authorization flows, combining robust backend rules with clear operational UI.',
     techStack: ['Node.js', 'NestJS', 'Angular', 'TypeScript', 'Authorization Flows'],

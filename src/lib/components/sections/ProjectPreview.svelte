@@ -10,8 +10,6 @@
 	import filtrCard from '$lib/assets/filtrgame-card.png';
 	import filtrLogo from '$lib/assets/filtrgame.svg';
 	import gustavoCard from '$lib/assets/gustavo-lima-card.png';
-	import guiapgoCard from '$lib/assets/guiapgo-card.png';
-	import guiapgoIcon from '$lib/assets/guiapgo-icon.png';
 
 	interface Props { project: Project }
 	let { project }: Props = $props();
@@ -26,16 +24,6 @@
 				<div class="agent-node"><span class="preview-icon">♧</span><strong>Clinical Agent</strong></div>
 				<div class="agent-node"><span class="preview-icon">▤</span><strong>Records Agent</strong></div>
 				<div class="agent-node"><span class="preview-icon">☷</span><strong>Response Agent</strong></div>
-			</div>
-		</div>
-	{:else if project.id === 'ai-travel-planner'}
-		<div class="guiapgo-preview">
-			<div class="guiapgo-preview__frame">
-				<img class="guiapgo-preview__art" src={guiapgoCard} alt="Mapsterkit travel planning website preview" />
-				<div class="guiapgo-preview__brand">
-					<span class="guiapgo-preview__icon-wrap"><img src={guiapgoIcon} alt="" /></span>
-					<span>Mapsterkit</span>
-				</div>
 			</div>
 		</div>
 	{:else if project.id === 'tenda-design-system'}
@@ -148,12 +136,6 @@
 	.goldn-preview__art { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; object-position: center; }
 	.goldn-preview__logo-wrap { position: absolute; top: 0.7rem; left: 0.7rem; display: grid; place-items: center; width: 7.3rem; height: 2.15rem; padding: 0.35rem 0.55rem; border: 1px solid rgba(242, 190, 107, 0.55); border-radius: 0.45rem; background: rgba(24, 11, 12, 0.86); box-shadow: 0 3px 9px rgba(0, 0, 0, 0.24); }
 	.goldn-preview__logo { display: block; width: 100%; height: 100%; object-fit: contain; }
-	.guiapgo-preview { display: grid; min-height: 12.5rem; padding: 0.65rem; background: #dff6f1; }
-	.guiapgo-preview__frame { position: relative; min-width: 0; min-height: 0; overflow: hidden; border: 1px solid rgba(16, 112, 125, 0.2); border-radius: 8px; background: #fff; box-shadow: 0 7px 16px rgba(16, 112, 125, 0.14); }
-	.guiapgo-preview__art { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; object-position: center; }
-	.guiapgo-preview__brand { position: absolute; top: 0.7rem; left: 0.7rem; display: flex; align-items: center; gap: 0.38rem; padding: 0.28rem 0.58rem 0.28rem 0.34rem; border: 1px solid rgba(133, 232, 208, 0.75); border-radius: 0.45rem; background: rgba(7, 61, 76, 0.9); color: #fff; font-size: 0.75rem; font-weight: 800; letter-spacing: -0.03em; box-shadow: 0 3px 9px rgba(4, 44, 56, 0.18); }
-	.guiapgo-preview__icon-wrap { display: grid; place-items: center; width: 1.15rem; height: 1.5rem; overflow: visible; }
-	.guiapgo-preview__icon-wrap img { display: block; width: 1.15rem; height: 1.5rem; object-fit: contain; object-position: center; mix-blend-mode: screen; }
 	.filtr-preview { display: grid; min-height: 12.5rem; padding: 0.65rem; background: #d8d9db; }
 	.filtr-preview__frame { position: relative; min-width: 0; min-height: 0; overflow: hidden; border: 1px solid rgba(24, 24, 24, 0.24); border-radius: 8px; background: #191919; box-shadow: 0 7px 16px rgba(24, 24, 24, 0.2); }
 	.filtr-preview__art { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; object-position: center; }
